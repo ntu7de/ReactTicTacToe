@@ -8,13 +8,10 @@ function Square({value, onSquareClick}) {
   )
 }
 
-export default function Board() {
-  const [xIsNext, setXIsNext] = useState(true);
-  const[squares, setSquares] = useState(Array(9).fill(null));
-
+function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
     // Check if squares[i] already has a value or if someone has won after clicking
-    if (squares[i] || calculateWinner(squares)) {
+    if (calculateWinner(squares) || squares[i]) {
       return;
     }
     // Duplicate the squares[] array
@@ -22,14 +19,15 @@ export default function Board() {
     // If X is next, fill array[i] with 'X'
     // Else, fill array[i] with 'O'
     if (xIsNext) {
-      nextSquares[i] = "X";
+      nextSquares[i] = 'X';
     } else {
-      nextSquares[i] = "O";
+      nextSquares[i] = 'O';
     }
+    onPlay(nextSquares);
     // Assign the squares[] prop to nextSquares (the copy with the updates)
-    setSquares(nextSquares);
+      // setSquares(nextSquares);
     // Change xIsNext to true or false
-    setXIsNext(!xIsNext);
+      // setXIsNext(!xIsNext);
   }
 
   // Checks if there is a winner
@@ -37,15 +35,15 @@ export default function Board() {
   // Establishes a status that shows whether it is a player's turn or if someone has won
   let status;
   if (winner) {
-    status = "Winner: " + winner;
+    status = 'Winner: ' + winner;
   } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
   return (
     // Using the squares[] array helps us keep track of the square's state
     // Make sure to add a div and its own className for any text or variable you'd
-      // like to display
+    // like to display
     <>
       <div className="status">{status}</div>
       <div className="board-row">
@@ -65,7 +63,33 @@ export default function Board() {
       </div>
     </>
   );
-  
+}
+
+// Game became the new Parent component so that the the history of moves can be stored
+  // and then the entire Board can be re-rendered to restore previous moves if needed
+export default function Game() {
+  // State to keep track of which player is next
+  const [xIsNext, setXIsNext] = useState(true);
+  // State to keep track of squares[] arrays
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+
+  function handlePlay(nextSquares) {
+    // Create a new array containing all the elements in history, followed by nextSquares
+    setHistory([...history, nextSquares]);
+    setXIsNext(!xIsNext);
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+      </div>
+      <div className="game-info">
+        <ol>{/*TODO*/}</ol>
+      </div>
+    </div>
+  );
 }
 
 // Calculates whether there is a winner
