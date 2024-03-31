@@ -9,12 +9,27 @@ function Square({value, onSquareClick}) {
 }
 
 export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const[squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
+    // Check if squares[i] already has a value
+    if (squares[i]) {
+      return;
+    }
+    // Duplicate the squares[] array
     const nextSquares = squares.slice();
-    nextSquares[i] = "X";
+    // If X is next, fill array[i] with 'X'
+    // Else, fill array[i] with 'O'
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    // Assign the squares[] prop to nextSquares (the copy with the updates)
     setSquares(nextSquares);
+    // Change xIsNext to true or false
+    setXIsNext(!xIsNext);
   }
 
   return (
