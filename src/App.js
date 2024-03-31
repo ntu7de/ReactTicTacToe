@@ -13,8 +13,8 @@ export default function Board() {
   const[squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
-    // Check if squares[i] already has a value
-    if (squares[i]) {
+    // Check if squares[i] already has a value or if someone has won after clicking
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
     // Duplicate the squares[] array
@@ -32,9 +32,22 @@ export default function Board() {
     setXIsNext(!xIsNext);
   }
 
+  // Checks if there is a winner
+  const winner = calculateWinner(squares);
+  // Establishes a status that shows whether it is a player's turn or if someone has won
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "O");
+  }
+
   return (
     // Using the squares[] array helps us keep track of the square's state
+    // Make sure to add a div and its own className for any text or variable you'd
+      // like to display
     <>
+      <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -55,6 +68,7 @@ export default function Board() {
   
 }
 
+// Calculates whether there is a winner
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
