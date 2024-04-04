@@ -68,13 +68,13 @@ function Board({ xIsNext, squares, onPlay }) {
 // Game became the new Parent component so that the the history of moves can be stored
   // and then the entire Board can be re-rendered to restore previous moves if needed
 export default function Game() {
-  // State to keep track of which player is next
-  const xIsNext = currentMove % 2 === 0;
   // State to keep track of squares[] arrays
   const [history, setHistory] = useState([Array(9).fill(null)]);
   // Add a state keeping track of the current move
   const [currentMove, setCurrentMove] = useState(0);
   const currentSquares = history[currentMove];
+  // State to keep track of which player is next
+  const xIsNext = currentMove % 2 === 0;
 
   function handlePlay(nextSquares) {
     // Create a slice of the history array with all elements from 0 to currentMove + 1 and then append the next squares
