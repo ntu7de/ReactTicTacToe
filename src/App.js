@@ -69,7 +69,7 @@ function Board({ xIsNext, squares, onPlay }) {
   // and then the entire Board can be re-rendered to restore previous moves if needed
 export default function Game() {
   // State to keep track of which player is next
-  const [xIsNext, setXIsNext] = useState(true);
+  const xIsNext = currentMove % 2 === 0;
   // State to keep track of squares[] arrays
   const [history, setHistory] = useState([Array(9).fill(null)]);
   // Add a state keeping track of the current move
@@ -81,13 +81,11 @@ export default function Game() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext);
   }
 
   // Function created to help jump to a previous move
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
-    setXIsNext(nextMove % 2 === 0);
   }
 
   const moves = history.map((squares, move) => {
