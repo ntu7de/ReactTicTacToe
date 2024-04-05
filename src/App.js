@@ -72,6 +72,8 @@ export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   // Add a state keeping track of the current move
   const [currentMove, setCurrentMove] = useState(0);
+  // Add a state to keep track of whether the list of moves is ascending
+  const [isAscending, setIsAscending] = useState(true);
   const currentSquares = history[currentMove];
   // State to keep track of which player is next
   const xIsNext = currentMove % 2 === 0;
@@ -86,6 +88,11 @@ export default function Game() {
   // Function created to help jump to a previous move
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
+  }
+
+  // Function to toggle ascending vs descending
+  function toggleOrder() {
+    setIsAscending(!isAscending);
   }
 
   const moves = history.map((squares, move) => {
@@ -108,7 +115,8 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <button onClick={toggleOrder}>Toggle Order</button>
+        <ol>{isAscending ? moves : moves.reverse()}</ol>
       </div>
     </div>
   );
