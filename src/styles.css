@@ -2,12 +2,6 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
-}
-
 h1 {
   margin-top: 0;
   font-size: 22px;
@@ -51,24 +45,37 @@ ul {
 }
 
 body {
-  font-family: sans-serif;
-  margin: 20px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: white;
+  background-color: #232D4B;
+  position: absolute;
+    right: 400px;
+    left: 400px;
+    top: 50px;
   padding: 0;
+}
+
+button {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  margin: 7px;
+  padding: 5px;
 }
 
 .square {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  color: black;
+  font-size: 125px;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 150px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 150px;
 }
 
 .board-row:after {
@@ -79,7 +86,10 @@ body {
 
 .status {
   margin-bottom: 10px;
+  text-align: center;
+  font-size: 50px;
 }
+
 .game {
   display: flex;
   flex-direction: row;
