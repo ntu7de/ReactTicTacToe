@@ -128,6 +128,7 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+    // Checks if squares[a] is filled, and if squares[a], squares[b], and squares[c] are ALL filled by either 'X' or 'O'
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
